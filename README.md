@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💬 Chat Bookmarks
 
-## Getting Started
+A prototype that reimagines ChatGPT as a **knowledge tool**, not just a conversation tool—by enabling users to bookmark and revisit key insights across chats.
 
-First, run the development server:
+---
+
+## 💡 Problem
+
+In long ChatGPT conversations, valuable insights get buried and are difficult to retrieve.
+
+Users today:
+
+* Scroll endlessly to find important answers
+* Re-ask the same questions
+* Lose high-value information over time
+
+---
+
+## 🎯 Solution
+
+Chat Bookmarks introduces a **cross-chat bookmarking system** that allows users to:
+
+* 🔖 Save specific messages
+* 📚 Access all bookmarks in one place
+* ⚡ Instantly jump back to important insights
+
+---
+
+## 🧠 Key Features
+
+* Bookmark any assistant message
+* Dedicated **Bookmarks section** in the sidebar
+* View bookmarks across all chats
+* Chat-level bookmark filtering (via menu)
+* Smooth scroll + highlight when navigating to a bookmark
+* Local session persistence using `localStorage`
+
+---
+
+## 👤 Target Users
+
+* Product Managers preparing case studies
+* Learners studying frameworks or concepts
+* Knowledge workers using ChatGPT for thinking & research
+
+---
+
+## 📊 Success Metrics (Hypothetical)
+
+* % of users creating at least one bookmark
+* Average bookmarks per user
+* Bookmark revisit rate
+* Reduction in time spent searching within chats
+
+---
+
+## ⚖️ Trade-offs
+
+* **LocalStorage vs Backend**
+
+  * Faster to prototype
+  * No cross-device sync
+
+* **Bookmarking assistant messages only**
+
+  * Simpler UX
+  * Less flexibility
+
+---
+
+## 🚀 Future Improvements
+
+* 🔍 Search within bookmarks
+* 🏷 Tagging & organization
+* ☁️ Cloud sync across devices
+* 🤖 AI-suggested highlights
+* 🧾 Export bookmarks to notes / Notion
+
+---
+
+## 🧪 Why this matters
+
+> This project explores how conversational interfaces can evolve from transient interactions into persistent **knowledge systems**.
+
+---
+
+## 🛠 Tech Stack
+
+* Next.js
+* React
+* TypeScript
+* Tailwind CSS
+
+---
+
+## ⚙️ Getting Started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 to view it in the browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Project Structure (simplified)
 
-## Learn More
+* `/app` – main application routes
+* `/components` – UI components (Chat, Sidebar, Messages)
+* `/lib` – helpers (localStorage, state management)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🙌 Author
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built by Alessandra Krick as a product-thinking + prototyping project.
