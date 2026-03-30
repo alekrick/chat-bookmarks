@@ -1,0 +1,186 @@
+FINAL CURSOR RULES — 2025 Edition (Next.js, RSC, TS, Tailwind)
+ Core TypeScript & Code Quality
+
+No unused imports, variables, parameters, or dead code.
+Use arrow functions for all components & helpers.
+Explicit argument + return types for all helpers.
+Only TypeScript code — no JS files.
+Do NOT use React.FC.
+Component signature: (props: Props): JSX.Element.
+TypeScript strict mode required:
+strict: true
+noImplicitAny: true
+strictNullChecks: true
+Avoid any. Use unknown and cast properly.
+No barrel imports (no index.ts re-exports).
+No inline styles & no logic inside JSX.
+Use Tailwind for styling.
+Naming conventions:
+Components → PascalCase
+Functions/variables → camelCase
+Constants → UPPER_SNAKE_CASE
+No console logs in production.
+Only console.error allowed with justification comment.
+ Do NOT use useMemo, useCallback, or memo unless absolutely required.
+ Folder Structure & Organization
+
+src/
+  constants/
+  helpers/
+  types/
+  store/
+    <slice-name>/
+      index.ts
+      constants.ts
+      helpers.ts
+      api.ts
+  hooks/
+  providers/
+  components/
+    shared/
+  features/
+  services/ or api/
+  styles/
+  tests/
+Component Folder Structure
+
+components/<ComponentName>/
+  index.tsx
+  constants.ts
+  helpers.ts
+  types.ts
+Small single-use components → 1 file.
+Shared reusable UI → components/shared/.
+Use error boundaries for runtime safety.
+ State Management (Zustand/Redux) — RSC Optimized
+
+ CRITICAL RULES
+
+ Never store server-fetched data in Zustand or Redux.
+ Never hydrate server data into client stores.
+Zustand is ONLY for client-side UI logic:
+modals
+filters (client only)
+toggles
+forms
+ephemeral UI state
+Store Rules
+Each slice must contain:
+
+index.ts
+constants.ts
+helpers.ts
+api.ts
+Request Status Enum
+src/types/request-status.ts
+
+export enum RequestStatus {
+  Init = 'init',
+  Pending = 'pending',
+  Fulfilled = 'fulfilled',
+  Rejected = 'rejected',
+}
+Slice Access Rule (NEW)
+
+Do NOT access entire Zustand store.
+Always access only the specific key:
+const value = useStore((state) => state.someKey);
+ Next.js Best Practices (App Router + RSC)
+
+Use <Image> for images; <Script> for scripts.
+Metadata goes in layout (title, description, OG, Twitter).
+Add organization schema (JSON-LD).
+Header & Footer rendered only in layout.
+Preload critical assets (preload, preconnect).
+Preload LCP image with priority.
+Use .webp images by default.
+Add correct CDN caching headers.
+Add sitemap.xml, robots.txt, llms.txt.
+Avoid use client unless required.
+No client fetching for initial render.
+Dynamic data must be fetched via:
+Server Components
+use server functions
+use cache
+ Server Data Architecture & use cache Rules
+A. Server Components Fetch Their Own Data
+
+All backend calls occur inside Server Components.
+No API calls in Client Components.
+B. All server utilities must use:
+
+'use server';
+C. Use use cache for shared/frequent server data
+
+'use server';
+import { use cache } from 'react';
+
+export const getUserProfile = use cache(async (id: string) => {
+  const res = await fetch(`${process.env.API_URL}/users/${id}`);
+  return res.json();
+});
+Rules:
+
+Must be defined outside components.
+Must be used when multiple components fetch the same data.
+Do NOT wrap browser APIs.
+Only for server-cacheable async logic.
+D. No Prop Drilling of Server Data
+
+If multiple components need the same data → use cached server function.
+Pass to client components only when required.
+E. NEVER sync server data → Zustand
+
+No server → client-store hydration.
+No store-based server data reading.
+ Page & Feature Structure
+
+Pages import + render a single root feature component.
+Folder structure must mirror the page UI:
+features/<page>/
+  index.tsx
+  components/
+  helpers.ts
+  constants.ts
+  types.ts
+Fetch all server data at page/layout level.
+Reuse it with use cache.
+Components < 200 lines (unless justified).
+Child components must be split logically.
+Lists → dedicated item components, unique keys.
+Only Tailwind for styling.
+Add data-testid for important elements.
+ Styling & Theming
+
+Tailwind CSS only.
+No inline styles or custom <style> tags.
+Use semantic design tokens.
+Avoid !important.
+Classnames must be readable and composable.
+ Images & Performance
+
+Use .webp format.
+Above-the-fold images must have priority.
+Use Next.js responsive image features.
+Preload fonts + critical files.
+Ensure CDN caching headers.
+ Code Splitting & Performance
+
+Use next/dynamic for heavy/interaction-only components:
+with skeleton fallback
+with ssr: false when needed
+Lazy load all non-critical UI.
+Prefer SSG/ISR when possible.
+Reduce re-renders through good component boundaries.
+Use use cache for expensive repeated server operations.
+ Do NOT use useMemo, useCallback, or memo unless absolutely necessary because RSC + React Compiler optimizes automatically.
+ Final Summary
+
+All data fetching happens in Server Components.
+Use use server for server functions.
+Use use cache for repeated/expensive server calls.
+Zustand is UI-only, never stores server data.
+Strict TypeScript + Tailwind only.
+Clean folder structure.
+No memo/useMemo/useCallback.
+Always select slice keys instead of entire Zustand store.
