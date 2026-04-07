@@ -114,14 +114,14 @@ const MessageBubble = ({
 
   const computeToolbarStyle = (): React.CSSProperties | undefined => {
     if (!activeToolbar) return undefined;
-    const TOOLBAR_W = 156;
+    const TOOLBAR_W = 260;
     const GAP = 10;
     const { rect } = activeToolbar;
     let x = rect.left + rect.width / 2 - TOOLBAR_W / 2;
-    let y = rect.top - 44 - GAP;
+    let y = rect.top - 56 - GAP;
     x = Math.max(8, Math.min(x, window.innerWidth - TOOLBAR_W - 8));
     if (y < 8) y = rect.bottom + GAP;
-    return { left: x, top: y, width: TOOLBAR_W };
+    return { left: x, top: y };
   };
 
   const dismissToolbar = (): void => {
@@ -186,7 +186,7 @@ const MessageBubble = ({
           style={computeToolbarStyle()}
           onMouseDown={(e) => e.preventDefault()}
         >
-          <div className="flex items-center justify-center gap-1.5 rounded-full bg-[#2a2a2a] px-2.5 py-1.5 shadow-2xl ring-1 ring-white/15">
+          <div className="flex items-end justify-center gap-0.5 rounded-2xl bg-[#2a2a2a] px-2.5 py-1.5 shadow-2xl ring-1 ring-white/15">
             {HIGHLIGHT_COLORS.map((color) => {
               const isActive =
                 activeToolbar.mode === "edit" &&
@@ -201,29 +201,36 @@ const MessageBubble = ({
                       : handleEditHighlight(color)
                   }
                   data-testid={`highlight-color-${color}`}
-                  className={`relative h-5 w-5 rounded-full ${COLOR_DOT[color]} ring-1 ring-white/20 transition-transform hover:scale-110 hover:ring-2 hover:ring-white/40`}
+                  className={`flex flex-col items-center gap-0.5 rounded-lg px-2 py-0.5 transition-colors hover:bg-white/10 ${isActive ? "bg-white/15" : ""}`}
                   title={isActive ? "Remove highlight" : `Highlight ${color}`}
                 >
-                  {isActive && (
-                    <svg
-                      width="10"
-                      height="10"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      className="absolute inset-0 m-auto text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]"
-                    >
-                      <path d="M18 6 6 18M6 6l12 12" />
-                    </svg>
-                  )}
+                  <span
+                    className={`relative h-5 w-5 shrink-0 rounded-full ${COLOR_DOT[color]} ring-1 ring-white/20`}
+                  >
+                    {isActive && (
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        className="absolute inset-0 m-auto text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]"
+                      >
+                        <path d="M18 6 6 18M6 6l12 12" />
+                      </svg>
+                    )}
+                  </span>
+                  <span className="text-[10px] capitalize leading-none text-white/50">
+                    {color}
+                  </span>
                 </button>
               );
             })}
-            <div className="mx-0.5 h-4 w-px bg-white/10" />
+            <div className="mx-0.5 mb-1 h-6 w-px self-center bg-white/10" />
             <button
               onClick={dismissToolbar}
-              className="flex h-5 w-5 items-center justify-center rounded-full text-white/30 transition-colors hover:bg-white/10 hover:text-white/60"
+              className="mb-1 flex h-5 w-5 items-center justify-center self-center rounded-full text-white/30 transition-colors hover:bg-white/10 hover:text-white/60"
               title="Cancel"
             >
               <svg

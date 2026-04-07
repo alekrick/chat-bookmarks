@@ -23,6 +23,7 @@ interface ChatAreaProps {
   onNavigateToBookmark: (bookmark: Bookmark) => void;
   onOpenSidebar: () => void;
   onDeleteChat: (id: string) => void;
+  onCreateChat: () => void;
 }
 
 const ChatArea = ({
@@ -37,6 +38,7 @@ const ChatArea = ({
   onNavigateToBookmark,
   onOpenSidebar,
   onDeleteChat,
+  onCreateChat,
 }: ChatAreaProps): JSX.Element => {
   const [input, setInput] = useState("");
   const [showMenu, setShowMenu] = useState(false);
@@ -110,6 +112,12 @@ const ChatArea = ({
           <p className="mt-1 text-sm text-white/30">
             Create a new chat to get started
           </p>
+          <button
+            onClick={onCreateChat}
+            className="mt-4 rounded-lg bg-white/10 px-4 py-2 text-sm font-medium text-white/80 transition-colors hover:bg-white/15 hover:text-white"
+          >
+            Start new chat
+          </button>
         </div>
       </div>
     );

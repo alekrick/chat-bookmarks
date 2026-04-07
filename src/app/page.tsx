@@ -44,6 +44,7 @@ const Home = (): JSX.Element => {
         onNavigateToBookmark={state.navigateToBookmark}
         onOpenSidebar={() => state.setSidebarOpen(true)}
         onDeleteChat={state.deleteChat}
+        onCreateChat={state.createChat}
       />
 
       {bookmarksOpen && (
